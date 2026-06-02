@@ -726,25 +726,70 @@ with tab3:
 # ══════════════════════ TAB 4 — TENTANG TIM ══════════════════════
 with tab4:
     st.markdown(f"""
-    <div class="about-card">
-        <div class="about-label">Sistem Operasi Digital</div>
-        <div class="about-title">{st.session_state.app_name}</div>
-        <div class="about-body">{st.session_state.web_desc}</div>
-    </div>
-    <div class="about-card">
-        <div class="about-label">Laboratorium Riset Pemilik Proyek</div>
-        <div class="about-title">{st.session_state.group_name}</div>
-        <div class="about-body" style="white-space:pre-line; font-family:'IBM Plex Mono', monospace; color:#00d2ff;">{st.session_state.group_desc}</div>
-    </div>
-    <div class="about-card">
-        <div class="about-label">Algoritma Penimbang Bio-Kimia</div>
-        <div class="about-title">Formulasi Integral Sub-Indeks Kualitas Air</div>
+        <div class="about-card">
+        <div class="about-label">Metodologi & Rumus Analisis Lab</div>
+        <div class="about-title">Formulasi Perhitungan Parameter Kimia Air</div>
         <div class="about-body">
-            Fungsi objektif perhitungan IKA dihitung menggunakan kombinasi koefisien stoikiometri dampak lingkungan fisis-biologis:<br><br>
-            <span style="font-family:'IBM Plex Mono', monospace; color:#00f5a0; font-size:1.1rem;">
-            <b>IKA = 0.30 × SI_pH + 0.35 × SI_BOD + 0.35 × SI_COD</b>
-            </span><br><br>
-            Di mana tiap nilai <i>Sub-Index</i> (SI) diekstraksi dari efisiensi kurva baku konversi ion terlarut dan laju respirasi mikroba oksigen terlarut.
+            Pengukuran parameter di laboratorium didasarkan pada metode standar titrasi dengan formulasi sebagai berikut:
+        </div>
+        <br>
+        
+        <div style="background:#ECFDF5; border:1px solid #6EE7B7; border-radius:12px; padding:18px; margin-bottom:14px;">
+            <span style="font-family:'IBM Plex Mono', monospace; color:#065F46; font-weight:700; font-size:0.9rem;">
+                🦠 1. Biochemical Oxygen Demand (BOD₅ - Metode Winkler)
+            </span>
+            <p style="color:#334155; font-size:0.85rem; margin:6px 0 12px 0;">
+                Digunakan untuk mengukur jumlah oksigen terlarut yang dibutuhkan oleh mikroorganisme/bakteri untuk menguraikan bahan organik.
+            </p>
+            <div style="background:#FFFFFF; padding:12px; border-radius:8px; border:1px solid #A7F3D0; text-align:center;">
+                <code style="font-family:'IBM Plex Mono', monospace; font-size:1rem; color:#047857; font-weight:600;">
+                    BOD (mg/L) = ((V_blanko - V_sampel) × N × 8000) / V_air_sampel
+                </code>
+            </div>
+            <div style="color:#475569; font-size:0.78rem; margin-top:10px; line-height:1.4;">
+                • <b>V_blanko</b> = Volume titran Na₂S₂O₃ untuk larutan blanko (mL)<br>
+                • <b>V_sampel</b> = Volume titran Na₂S₂O₃ untuk air sampel setelah inkubasi 5 days (mL)<br>
+                • <b>N</b> = Normalitas larutan standar Na₂S₂O₃<br>
+                • <b>8000</b> = Faktor konversi berat ekivalen Oksigen (mg/L)
+            </div>
+        </div>
+
+        <div style="background:#F5F3FF; border:1px solid #C4B5FD; border-radius:12px; padding:18px; margin-bottom:14px;">
+            <span style="font-family:'IBM Plex Mono', monospace; color:#4C1D95; font-weight:700; font-size:0.9rem;">
+                🧪 2. Chemical Oxygen Demand (COD - Metode Refluks)
+            </span>
+            <p style="color:#334155; font-size:0.85rem; margin:6px 0 12px 0;">
+                Mengukur kesetaraan oksigen dari komponen organik yang dapat dioksidasi secara kimiawi menggunakan kalium dikromat sebagai oksidator kuat.
+            </p>
+            <div style="background:#FFFFFF; padding:12px; border-radius:8px; border:1px solid #DDD6FE; text-align:center;">
+                <code style="font-family:'IBM Plex Mono', monospace; font-size:1rem; color:#6D28D9; font-weight:600;">
+                    COD (mg/L) = ((V_blanko - V_sampel) × N × 8000) / V_air_sampel
+                </code>
+            </div>
+            <div style="color:#475569; font-size:0.78rem; margin-top:10px; line-height:1.4;">
+                • <b>V_blanko</b> = Volume titran FAS untuk blanko (mL)<br>
+                • <b>V_sampel</b> = Volume titran FAS untuk air sampel setelah destruksi asam (mL)<br>
+                • <b>N</b> = Normalitas larutan standar FAS<br>
+                • <b>8000</b> = Faktor miliekuivalen oksigen × 1000 mL/L
+            </div>
+        </div>
+
+        <div style="background:#F8FAFC; border:1px solid #DDE3ED; border-radius:12px; padding:18px;">
+            <span style="font-family:'IBM Plex Mono', monospace; color:#1A202C; font-weight:700; font-size:0.9rem;">
+                📊 3. Integrasi Indeks Kualitas Air (IKA) Gabungan
+            </span>
+            <p style="color:#334155; font-size:0.85rem; margin:6px 0 12px 0;">
+                Penggabungan sub-indeks parameter tertimbang untuk menghasilkan satu nilai mutu air akhir.
+            </p>
+            <div style="background:#FFFFFF; padding:12px; border-radius:8px; border:1px solid #CBD5E1; text-align:center;">
+                <code style="font-family:'IBM Plex Mono', monospace; font-size:1rem; color:#0F172A; font-weight:600;">
+                    IKA = 0.30 × SI_pH + 0.35 × SI_BOD + 0.35 × SI_COD
+                </code>
+            </div>
+            <div style="color:#475569; font-size:0.78rem; margin-top:10px;">
+                • <b>SI_pH / SI_BOD / SI_COD</b> = Nilai <i>Sub-Index</i> (0-100) masing-masing parameter berdasarkan kriteria Baku Mutu Air Kelas II PP No. 22/2021.
+            </div>
         </div>
     </div>
     """, unsafe_allow_html=True)
+
