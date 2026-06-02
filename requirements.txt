@@ -1,5 +1,2 @@
 streamlit
-matplotlib
-numpy
-pandas
-fpdf2
+plotly
