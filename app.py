@@ -678,49 +678,34 @@ with tab1:
     </div>
     """, unsafe_allow_html=True)
 
-# ══════════════════════ TAB 2 — DATABASE MULTI-SAMPEL (INPUT BERULANG) ══════════════════════
+                # ══════════════════════ TAB 2 — REFERENSI ══════════════════════
 with tab2:
-    st.markdown('<div class="sec-head">🗄️ REPOSITORI HISTORIS KUANTUM (REPEATED INPUTS)</div>', unsafe_allow_html=True)
-    st.write("Daftar sampel air yang telah Anda rekam berulang kali melalui panel input kiri:")
-    
-    if st.session_state.sample_history:
-        df_history = pd.DataFrame(st.session_state.sample_history)
-        
-        # Tampilkan tabel interaktif
-        st.dataframe(df_history, use_container_width=True, hide_index=True)
-        
-        # Visualisasi Komparasi Antar Sampel yang diinput berulang
-        st.markdown('<div class="sec-head">📈 GRAFIK TREN MULTI-SAMPEL</div>', unsafe_allow_html=True)
-        
-        fig_trend = px.line(
-            df_history, x="ID Sampel", y="Skor IKA", 
-            markers=True, text="Skor IKA",
-            title="Fluktuasi Kualitas Air Antar Komparasi Sampel Berulang"
-        )
-        fig_trend.update_traces(line_color="#00f5a0", marker=dict(size=10, color="#00d2ff"), textposition="top center")
-        fig_trend.update_layout(
-            paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="#141b2d",
-            font_color="#e2e8f0", title_font_family="IBM Plex Mono",
-            xaxis=dict(gridcolor="#2d3d5a"), yaxis=dict(gridcolor="#2d3d5a", range=[0, 105])
-        )
-        st.plotly_chart(fig_trend, use_container_width=True)
-        
-    else:
-        st.info("Belum ada sampel yang disimpan. Masukkan nilai parameter di sidebar kiri lalu klik tombol '🧬 SIMPAN KE DATABASE HISTORIS'.")
+    st.markdown('<div class="sec-head">BAKU MUTU pH</div>', unsafe_allow_html=True)
+    render_ref_table(PH_REF)
+    st.markdown('<div class="sec-head">BAKU MUTU BOD</div>', unsafe_allow_html=True)
+    render_ref_table(BOD_REF)
+    st.markdown('<div class="sec-head">BAKU MUTU COD</div>', unsafe_allow_html=True)
+    render_ref_table(COD_REF)
+    st.markdown("""
+    <div class="info-box" style="margin-top:20px;">
+        Referensi: <b>PP No. 22 Tahun 2021</b> tentang Penyelenggaraan Perlindungan dan
+        Pengelolaan Lingkungan Hidup, dan <b>PermenLHK</b> tentang Baku Mutu Air Nasional.
+        Kelas II digunakan untuk prasarana/sarana rekreasi air, budidaya ikan air tawar,
+        peternakan, dan pengairan pertanaman.
+    </div>
+    """, unsafe_allow_html=True)
 
 # ══════════════════════ TAB 3 — TENTANG ══════════════════════
 with tab3:
-    st.markdown(f"""
-    <div class="about-card">
-        <div class="about-label">Tentang Aplikasi</div>
-        <div class="about-title">{st.session_state.app_name}</div>
-        <div class="about-body">{st.session_state.web_desc}</div>
-    </div>
-    <div class="about-card">
-        <div class="about-label">Tim Pengembang</div>
-        <div class="about-title">{st.session_state.group_name}</div>
-        <div class="about-body" style="white-space:pre-line;">{st.session_state.group_desc}</div>
-    </div>
+    # Bagian 1: Tentang Aplikasi & Tim Pengembang (Menggunakan st.write agar variabel Session State tidak rusak)
+    st.markdown('<div class="about-card"><div class="about-label">Tentang Aplikasi</div></div>', unsafe_allow_html=True)
+    st.info(st.session_state.web_desc)
+    
+    st.markdown('<div class="about-card"><div class="about-label">Tim Pengembang</div></div>', unsafe_allow_html=True)
+    st.success(f"**{st.session_state.group_name}**\n\n{st.session_state.group_desc}")
+    
+    # Bagian 2: Tampilan Rumus Lab (Menggunakan HTML murni tanpa format f-string agar 100% aman)
+    st.markdown("""
     <div class="about-card">
         <div class="about-label">Metodologi & Rumus Analisis Lab</div>
         <div class="about-title">Formulasi Perhitungan Parameter Kimia Air</div>
