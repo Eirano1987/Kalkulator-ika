@@ -725,17 +725,19 @@ with tab3:
 
 # ══════════════════════ TAB 4 — TENTANG TIM ══════════════════════
 with tab4:
-    # 1. Bagian Informasi Aplikasi & Tim Pengembang
-    st.header("📋 Sistem Operasi Digital")
-    st.info(st.session_state.get('deskripsi_web', 'Aplikasi analisis kimia air kuantum untuk melacak indeks kualitas air.'))
-    
-    st.header("🔬 Laboratorium Riset Pemilik")
-    # Mengambil nama grup dan deskripsi anggota secara otomatis
-    nama_kelompok = st.session_state.get('nama_grup', 'Anggota Kelompok 4')
-    detail_anggota = st.session_state.get('deskripsi_grup', '')
-    st.success(f"**{nama_kelompok}**\n\n{detail_anggota}")
-    
-    st.divider()
+    # Bagian Atas: Menampilkan Informasi Aplikasi & Tim secara Otomatis dari Session State Anda
+    st.markdown(f"""
+    <div class="about-card">
+        <div class="about-label">Sistem Operasi Digital</div>
+        <div class="about-title">{st.session_state.nama_aplikasi if 'nama_aplikasi' in st.session_state else st.session_state.get('app_name', 'AquaChem IKA Pro')}</div>
+        <div class="about-body">{st.session_state.deskripsi_web if 'deskripsi_web' in st.session_state else st.session_state.get('web_desc', '')}</div>
+    </div>
+    <div class="about-card">
+        <div class="about-label">Laboratorium Riset Pemilik</div>
+        <div class="about-title">{st.session_state.nama_grup if 'nama_grup' in st.session_state else st.session_state.get('group_name', 'Anggota Kelompok 4')}</div>
+        <div class="about-body" style="white-space:pre-line;">{st.session_state.deskripsi_grup if 'deskripsi_grup' in st.session_state else st.session_state.get('group_desc', '')}</div>
+    </div>
+    """, unsafe_allow_html=True)
     
     # 2. Bagian Rumus Analisis Laboratorium (Menggunakan Fitur Math Kode Streamlit Asli)
     st.header("🧮 Algoritma Penimbang Bio-Kimia")
