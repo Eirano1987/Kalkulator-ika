@@ -725,78 +725,51 @@ with tab3:
 
 # ══════════════════════ TAB 4 — TENTANG TIM ══════════════════════
 with tab4:
-    # Bagian Atas: Menampilkan Informasi Aplikasi & Tim secara Otomatis dari Session State Anda
-    st.markdown(f"""
-    <div class="about-card">
-        <div class="about-label">Sistem Operasi Digital</div>
-        <div class="about-title">{st.session_state.nama_aplikasi if 'nama_aplikasi' in st.session_state else st.session_state.get('app_name', 'AquaChem IKA Pro')}</div>
-        <div class="about-body">{st.session_state.deskripsi_web if 'deskripsi_web' in st.session_state else st.session_state.get('web_desc', '')}</div>
-    </div>
-    <div class="about-card">
-        <div class="about-label">Laboratorium Riset Pemilik</div>
-        <div class="about-title">{st.session_state.nama_grup if 'nama_grup' in st.session_state else st.session_state.get('group_name', 'Anggota Kelompok 4')}</div>
-        <div class="about-body" style="white-space:pre-line;">{st.session_state.deskripsi_grup if 'deskripsi_grup' in st.session_state else st.session_state.get('group_desc', '')}</div>
-    </div>
-    """, unsafe_allow_html=True)
+    # 1. Bagian Informasi Aplikasi & Tim Pengembang
+    st.header("📋 Sistem Operasi Digital")
+    st.info(st.session_state.get('deskripsi_web', 'Aplikasi analisis kimia air kuantum untuk melacak indeks kualitas air.'))
+    
+    st.header("🔬 Laboratorium Riset Pemilik")
+    # Mengambil nama grup dan deskripsi anggota secara otomatis
+    nama_kelompok = st.session_state.get('nama_grup', 'Anggota Kelompok 4')
+    detail_anggota = st.session_state.get('deskripsi_grup', '')
+    st.success(f"**{nama_kelompok}**\n\n{detail_anggota}")
+    
+    st.divider()
+    
+    # 2. Bagian Rumus Analisis Laboratorium (Menggunakan Fitur Math Kode Streamlit Asli)
+    st.header("🧮 Algoritma Penimbang Bio-Kimia")
+    st.subheader("Formulasi Perhitungan Parameter Kimia Air")
+    st.caption("Pengukuran parameter di laboratorium didasarkan pada metode standar titrasi dengan formulasi sebagai berikut:")
+    
+    # Kotak Rumus BOD
+    with st.expander("🦠 1. Biochemical Oxygen Demand (BOD₅ - Metode Winkler)", expanded=True):
+        st.write("Digunakan untuk mengukur jumlah oksigen terlarut yang dibutuhkan oleh mikroorganisme/bakteri untuk menguraikan bahan organik.")
+        st.code("BOD (mg/L) = ((V_blanko - V_sampel) × N × 8000) / V_air_sampel", language="text")
+        st.markdown("""
+        * **V_blanko** = Volume titran Na₂S₂O₃ untuk larutan blanko (mL)
+        * **V_sampel** = Volume titran Na₂S₂O₃ untuk air sampel setelah inkubasi 5 hari (mL)
+        * **N** = Normalitas larutan standar Na₂S₂O₃
+        * **8000** = Faktor konversi berat ekivalen Oksigen (mg/L)
+        """)
 
-    # Bagian Bawah: Menampilkan Rumus Laboratorium menggunakan HTML murni terpisah (Bebas dari Eror Persen %)
-    st.markdown("""
-    <div class="about-card">
-        <div class="about-label">Algoritma Penimbang Bio-Kimia</div>
-        <div class="about-title">Formulasi Integral Parameter Laboratorium</div>
-        <div class="about-body">
-            Formulasi perhitungan pengujian sampel air berdasarkan standarisasi titrasi laboratorium:
-        </div>
-        <br>
-        
-        <div style="background:#ECFDF5; border:1px solid #6EE7B7; border-radius:12px; padding:18px; margin-bottom:14px;">
-            <span style="font-family:'IBM Plex Mono', monospace; color:#065F46; font-weight:700; font-size:0.9rem;">
-                🦠 1. Biochemical Oxygen Demand (BOD₅ - Metode Winkler)
-            </span>
-            <p style="color:#334155; font-size:0.85rem; margin:6px 0 12px 0;">
-                Kebutuhan oksigen mengurai bahan organik oleh mikroorganisme selama inkubasi 5 hari.
-            </p>
-            <div style="background:#FFFFFF; padding:12px; border-radius:8px; border:1px solid #A7F3D0; text-align:center;">
-                <code style="font-family:'IBM Plex Mono', monospace; font-size:1rem; color:#047857; font-weight:600;">
-                    BOD (mg/L) = ((V_blanko - V_sampel) × N × 8000) / V_air_sampel
-                </code>
-            </div>
-            <div style="color:#475569; font-size:0.78rem; margin-top:10px; line-height:1.4;">
-                • <b>V_blanko</b> = Volume titran Na₂S₂O₃ untuk blanko (mL)<br>
-                • <b>V_sampel</b> = Volume titran Na₂S₂O₃ untuk sampel air akhir (mL)<br>
-                • <b>N</b> = Normalitas Na₂S₂O₃
-            </div>
-        </div>
+    # Kotak Rumus COD
+    with st.expander("🧪 2. Chemical Oxygen Demand (COD - Metode Refluks)", expanded=True):
+        st.write("Mengukur kesetaraan oksigen dari komponen organik yang dapat dioksidasi secara kimiawi menggunakan kalium dikromat sebagai oksidator kuat.")
+        st.code("COD (mg/L) = ((V_blanko - V_sampel) × N × 8000) / V_air_sampel", language="text")
+        st.markdown("""
+        * **V_blanko** = Volume titran FAS untuk blanko (mL)
+        * **V_sampel** = Volume titran FAS untuk air sampel setelah destruksi asam (mL)
+        * **N** = Normalitas larutan standar FAS
+        * **8000** = Faktor miliekuivalen oksigen × 1000 mL/L
+        """)
 
-        <div style="background:#F5F3FF; border:1px solid #C4B5FD; border-radius:12px; padding:18px; margin-bottom:14px;">
-            <span style="font-family:'IBM Plex Mono', monospace; color:#4C1D95; font-weight:700; font-size:0.9rem;">
-                🧪 2. Chemical Oxygen Demand (COD - Metode Refluks)
-            </span>
-            <p style="color:#334155; font-size:0.85rem; margin:6px 0 12px 0;">
-                Kesetaraan total kebutuhan oksigen secara kimiawi menggunakan Kalium Dikromat.
-            </p>
-            <div style="background:#FFFFFF; padding:12px; border-radius:8px; border:1px solid #DDD6FE; text-align:center;">
-                <code style="font-family:'IBM Plex Mono', monospace; font-size:1rem; color:#6D28D9; font-weight:600;">
-                    COD (mg/L) = ((V_blanko - V_sampel) × N × 8000) / V_air_sampel
-                </code>
-            </div>
-            <div style="color:#475569; font-size:0.78rem; margin-top:10px; line-height:1.4;">
-                • <b>V_blanko</b> = Volume titran FAS untuk blanko (mL)<br>
-                • <b>V_sampel</b> = Volume titran FAS untuk sampel hancuran (mL)<br>
-                • <b>N</b> = Normalitas larutan FAS
-            </div>
-        </div>
+    # Kotak Rumus IKA
+    with st.expander("📊 3. Integrasi Indeks Kualitas Air (IKA) Gabungan", expanded=True):
+        st.write("Penggalian sub-indeks parameter tertimbang untuk menghasilkan satu nilai mutu air akhir.")
+        st.code("IKA = 0.30 × SI_pH + 0.35 × SI_BOD + 0.35 × SI_COD", language="text")
+        st.markdown("""
+        * **SI_pH / SI_BOD / SI_COD** = Nilai *Sub-Index* (0-100) masing-masing parameter berdasarkan kriteria Baku Mutu Air Kelas II PP No. 22/2021.
+        """)
 
-        <div style="background:#F8FAFC; border:1px solid #DDE3ED; border-radius:12px; padding:18px;">
-            <span style="font-family:'IBM Plex Mono', monospace; color:#1A202C; font-weight:700; font-size:0.9rem;">
-                📊 3. Formulasi Integral Sub-Indeks Kualitas Air (IKA)
-            </span>
-            <div style="background:#FFFFFF; padding:12px; border-radius:8px; border:1px solid #CBD5E1; text-align:center; margin:10px 0;">
-                <code style="font-family:'IBM Plex Mono', monospace; font-size:1rem; color:#0F172A; font-weight:600;">
-                    IKA = 0.30 × SI_pH + 0.35 × SI_BOD + 0.35 × SI_COD
-                </code>
-            </div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
 
